@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Top Up - Dabz Shop</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #00ffff;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      background: #222;
+      color: #fff;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      background: #00ffff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>🛒 Form Top Up Game</h2>
+  <form id="topupForm">
+    <label>Game</label>
+    <select name="game" required>
+      <option value="Free Fire">Free Fire</option>
+      <option value="Mobile Legends">Mobile Legends</option>
+      <option value="PUBG">PUBG</option>
+      <option value="Genshin Impact">Genshin Impact</option>
+    </select>
+
+    <label>ID Player</label>
+    <input type="text" name="id" required placeholder="Contoh: 123456789" />
+
+    <label>Server (Jika ada)</label>
+    <input type="text" name="server" placeholder="Server / Zone ID" />
+
+    <label>Pilih Nominal</label>
+    <select name="nominal">
+      <option value="5 Diamonds / 5 UC / 50 Genesis">5 Diamonds / 5 UC / 50 Genesis</option>
+      <option value="85 Diamonds / 85 UC / 300 Genesis">85 Diamonds / 85 UC / 300 Genesis</option>
+      <option value="500 Diamonds / 500 UC / 1000 Genesis">500 Diamonds / 500 UC / 1000 Genesis</option>
+    </select>
+
+    <label>Metode Pembayaran</label>
+    <select name="pembayaran">
+      <option>DANA (085194924273)</option>
+      <option>OVO</option>
+      <option>QRIS</option>
+    </select>
+
+    <label>Upload Bukti Transfer</label>
+    <input type="file" name="bukti" accept="image/*" />
+
+    <label>Nomor WhatsApp untuk Konfirmasi</label>
+    <input type="text" name="wa" required placeholder="Contoh: 08xxxxxxxxxx" />
+
+    <button type="submit">Kirim Pesanan</button>
+  </form>
+
+  <script>
+    document.getElementById("topupForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = new FormData(this);
+      const pesan = `Top Up Game - Dabz Shop%0A
+Game: ${form.get("game")}%0A
+ID: ${form.get("id")}%0A
+Server: ${form.get("server")}%0A
+Nominal: ${form.get("nominal")}%0A
+Pembayaran: ${form.get("pembayaran")}%0A
+No. WhatsApp: ${form.get("wa")}%0A
+Status: Bukti transfer terlampir (cek manual).`;
+
+      window.open(`https://wa.me/6285194924273?text=${pesan}`, "_blank");
+    });
+  </script>
+</body>
+</html>
