@@ -3,96 +3,152 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Top Up - Dabz Shop</title>
+  <title>Dabz Shop - Panel Top Up Game</title>
   <style>
     body {
-      background: #111;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #002bff, #ff0044);
       color: #fff;
-      font-family: sans-serif;
       padding: 20px;
+      text-align: center;
     }
-    h2 {
-      color: #00ffff;
+    .container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h1 {
+      color: #ffdf00;
     }
     label {
       display: block;
       margin-top: 15px;
+      text-align: left;
     }
     input, select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border-radius: 5px;
+      border-radius: 8px;
       border: none;
-      background: #222;
-      color: #fff;
     }
     button {
       margin-top: 20px;
-      padding: 12px;
-      background: #00ffff;
+      padding: 12px 20px;
+      background-color: #00ffcc;
       color: #000;
       font-weight: bold;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
+    button:hover {
+      background-color: #00ddb0;
+    }
+    .note {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    .wa-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: #25D366;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <h2>🛒 Form Top Up Game</h2>
-  <form id="topupForm">
-    <label>Game</label>
-    <select name="game" required>
-      <option value="Free Fire">Free Fire</option>
-      <option value="Mobile Legends">Mobile Legends</option>
-      <option value="PUBG">PUBG</option>
-      <option value="Genshin Impact">Genshin Impact</option>
-    </select>
+  <div class="container">
+    <h1>🔥 DABZ SHOP 🔥</h1>
+    <p>Top Up Game FF, ML, Genshin dan lainnya</p>
 
-    <label>ID Player</label>
-    <input type="text" name="id" required placeholder="Contoh: 123456789" />
+    <form id="topupForm">
+      <label for="game">Pilih Game:</label>
+      <select id="game" required>
+        <option value="">-- Pilih Game --</option>
+        <option value="Free Fire">Free Fire</option>
+        <option value="Mobile Legends">Mobile Legends</option>
+        <option value="Genshin Impact">Genshin Impact</option>
+      </select>
 
-    <label>Server (Jika ada)</label>
-    <input type="text" name="server" placeholder="Server / Zone ID" />
+      <label for="id">ID Game:</label>
+      <input type="text" id="id" placeholder="Masukkan ID Kamu" required>
 
-    <label>Pilih Nominal</label>
-    <select name="nominal">
-      <option value="5 Diamonds / 5 UC / 50 Genesis">5 Diamonds / 5 UC / 50 Genesis</option>
-      <option value="85 Diamonds / 85 UC / 300 Genesis">85 Diamonds / 85 UC / 300 Genesis</option>
-      <option value="500 Diamonds / 500 UC / 1000 Genesis">500 Diamonds / 500 UC / 1000 Genesis</option>
-    </select>
+      <label for="server">Server / Zone ID (jika ada):</label>
+      <input type="text" id="server" placeholder="Contoh: 12345">
 
-    <label>Metode Pembayaran</label>
-    <select name="pembayaran">
-      <option>DANA (085194924273)</option>
-      <option>OVO</option>
-      <option>QRIS</option>
-    </select>
+      <label for="nominal">Nominal Top Up:</label>
+      <select id="nominal" required>
+        <option value="">-- Pilih Nominal --</option>
+      </select>
 
-    <label>Upload Bukti Transfer</label>
-    <input type="file" name="bukti" accept="image/*" />
+      <label for="bukti">Upload Bukti Transfer:</label>
+      <input type="file" id="bukti" accept="image/*" required>
 
-    <label>Nomor WhatsApp untuk Konfirmasi</label>
-    <input type="text" name="wa" required placeholder="Contoh: 08xxxxxxxxxx" />
+      <button type="submit">Kirim Pesanan</button>
+    </form>
 
-    <button type="submit">Kirim Pesanan</button>
-  </form>
+    <a id="waLink" class="wa-btn" style="display:none;" target="_blank">Kirim ke WhatsApp</a>
+
+    <p class="note">📱 Pembayaran ke: <strong>085194924273 (DANA)</strong></p>
+    <p class="note">Konfirmasi manual via WhatsApp</p>
+  </div>
 
   <script>
-    document.getElementById("topupForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const form = new FormData(this);
-      const pesan = `Top Up Game - Dabz Shop%0A
-Game: ${form.get("game")}%0A
-ID: ${form.get("id")}%0A
-Server: ${form.get("server")}%0A
-Nominal: ${form.get("nominal")}%0A
-Pembayaran: ${form.get("pembayaran")}%0A
-No. WhatsApp: ${form.get("wa")}%0A
-Status: Bukti transfer terlampir (cek manual).`;
+    const gameSelect = document.getElementById('game');
+    const nominalSelect = document.getElementById('nominal');
+    const form = document.getElementById('topupForm');
+    const waLink = document.getElementById('waLink');
 
-      window.open(`https://wa.me/6285194924273?text=${pesan}`, "_blank");
+    const nominalData = {
+      "Free Fire": [
+        "70 Diamonds - Rp10.000",
+        "140 Diamonds - Rp20.000",
+        "355 Diamonds - Rp50.000"
+      ],
+      "Mobile Legends": [
+        "86 DM - Rp10.000",
+        "172 DM - Rp20.000",
+        "257 DM - Rp30.000",
+        "706 DM - Rp80.000"
+      ],
+      "Genshin Impact": [
+        "60 Genesis Crystals - Rp15.000",
+        "300+30 GC - Rp75.000",
+        "980+110 GC - Rp225.000"
+      ]
+    };
+
+    gameSelect.addEventListener('change', () => {
+      const game = gameSelect.value;
+      const nominals = nominalData[game] || [];
+      nominalSelect.innerHTML = '<option value="">-- Pilih Nominal --</option>';
+      nominals.forEach(n => {
+        const opt = document.createElement('option');
+        opt.value = n;
+        opt.textContent = n;
+        nominalSelect.appendChild(opt);
+      });
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const game = gameSelect.value;
+      const id = document.getElementById('id').value;
+      const server = document.getElementById('server').value || '-';
+      const nominal = nominalSelect.value;
+
+      const message = `Halo Admin Dabz Shop,%0ASaya ingin top up:%0A🕹 Game: ${game}%0A🆔 ID: ${id}%0A🌐 Server: ${server}%0A💎 Nominal: ${nominal}%0A📸 Bukti transfer terlampir`;
+
+      waLink.href = `https://wa.me/6285194924273?text=${message}`;
+      waLink.style.display = 'inline-block';
+      alert('Klik tombol hijau untuk konfirmasi via WhatsApp admin.');
     });
   </script>
 </body>
